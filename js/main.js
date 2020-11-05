@@ -54,7 +54,23 @@ function createScene(){
     scene.registerBeforeRender(function() {
         if((ticker++ % 60)) return;
         let nextChar = SHAPES[randomInteger(1, SHAPES.length)]
-        getBody(nextChar, scene, new BABYLON.Vector3(0,40,0))  
+        var b = getBody(nextChar, scene, new BABYLON.Vector3(0,40,0))
+        scene.onKeyboardObservable.add((kbInfo) => {
+            switch (kbInfo.type) {
+                case BABYLON.KeyboardEventTypes.KEYDOWN:
+                    switch (kbInfo.event.keyCode) {
+                        case 65:  //A
+                            //nextShape.position.z -= 0.1;
+                            b.position.x -= 1;
+                            break
+                        case 68: //D
+                            //nextShape.position.z += 0.1;
+                            b.position.x += 1;
+                            break
+                    }
+                    break;
+            }
+        });
     });
     scene.registerBeforeRender( ()=> {
         scene.meshes.forEach( (m)=> {
